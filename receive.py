@@ -2,8 +2,8 @@ import pika
 import os
 import sys 
 
-def callback(ch, method, properties, body):
-    print(f" [x] Received :{body}")
+def callback(ch, method, properties, body: bytes):
+    print(f" [x] Received : {body.decode("utf-8")}")
 
 def main():
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))

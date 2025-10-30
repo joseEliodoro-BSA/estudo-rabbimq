@@ -1,4 +1,5 @@
 import pika
+from datetime import datetime
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
@@ -9,7 +10,11 @@ channel.queue_declare(queue="hello")
 # Declara a lista dos destinatários que receberam uma mensagem
 # Essa lista é criada dentro do servidor RabbitMQ
 
-channel.basic_publish(exchange='', routing_key='hello',body='Hello World!')
+channel.basic_publish(
+    exchange='', 
+    routing_key='hello',
+    body='Hello World!\nDate: %s ' % datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+)
 # Envia a mensagem para o servidor do rabbitMQ deacordor a lista especificada.
 print(" [x] Sent 'Hello World!'")
 
